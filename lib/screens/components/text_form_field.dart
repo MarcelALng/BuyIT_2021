@@ -10,7 +10,7 @@ class ComponentTextFormField extends StatelessWidget {
     @required this.hintText,
     @required this.validator,
     @required this.onSaved,
-    this.secret = false,
+    this.secret = false, //not required
   });
   @override
   Widget build(BuildContext context) {
