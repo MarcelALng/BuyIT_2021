@@ -22,6 +22,7 @@ class BuyITApp extends StatelessWidget {
         RoutesConstants.search: (c) => SearchScreen(),
         RoutesConstants.shop: (c) => ShopScreen(),
       },
+      theme: ThemeData.dark(),
     );
   }
 }
