@@ -25,6 +25,9 @@ dependencies:
     sdk: flutter
   firebase_auth: ^0.16.0
   cloud_firestore: ^0.13.5
+  rounded_loading_button: ^1.0.0
+  google_fonts: ^1.0.0
+  string_validator: ^0.1.4
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -72,6 +75,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
