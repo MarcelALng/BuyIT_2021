@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -15,8 +17,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final FirebaseAuth _controllerFirebase = FirebaseAuth.instance;
-
-    final double _fontSizeTitle = MediaQuery.of(context).size.height * 0.15;
+    final MediaQueryData _device = MediaQuery.of(context);
+    final double _fontSizeTitle = _device.orientation == Orientation.portrait
+        ? _device.size.height * 0.10
+        : _device.size.height * 0.05;
     String _email;
     String _password;
 
@@ -72,6 +76,7 @@ class LoginScreen extends StatelessWidget {
                     }),
                 SizedBox(height: 20.0),
                 ComponentButtonForm(
+                    child: "Se connecter",
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
@@ -81,7 +86,8 @@ class LoginScreen extends StatelessWidget {
                             .then((value) => _controllerFirebase
                                 .currentUser()
                                 .then((value) => print(value.email)))
-                            .catchError((onError) => print(onError));
+                            .catchError((PlatformException onError) =>
+                                print(onError.message));
                         _buttonController.success();
                       }
                     },

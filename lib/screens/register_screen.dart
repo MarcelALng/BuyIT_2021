@@ -16,7 +16,10 @@ class RegisterScreen extends StatelessWidget {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final FirebaseAuth _controllerFirebase = FirebaseAuth.instance;
 
-    final double _fontSizeTitle = MediaQuery.of(context).size.height * 0.15;
+    final MediaQueryData _device = MediaQuery.of(context);
+    final double _fontSizeTitle = _device.orientation == Orientation.portrait
+        ? _device.size.height * 0.10
+        : _device.size.height * 0.05;
     String _email;
     String _password;
     return Scaffold(
@@ -83,6 +86,7 @@ class RegisterScreen extends StatelessWidget {
                     }),
                 SizedBox(height: 20.0),
                 ComponentButtonForm(
+                    child: "S'inscrire",
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();

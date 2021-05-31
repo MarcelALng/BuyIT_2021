@@ -5,8 +5,12 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 class ComponentButtonForm extends StatelessWidget {
   final VoidCallback onPressed;
   final RoundedLoadingButtonController controller;
+  final String child;
 
-  ComponentButtonForm({@required this.onPressed, @required this.controller});
+  ComponentButtonForm(
+      {@required this.onPressed,
+      @required this.controller,
+      @required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class ComponentButtonForm extends StatelessWidget {
       child: RoundedLoadingButton(
         controller: controller,
         onPressed: onPressed,
-        child: Text("Se connecter"),
+        child: Text(child),
         color: Colors.orange[600],
       ),
     );
