@@ -5,8 +5,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:string_validator/string_validator.dart' as validate;
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'components/button_form.dart';
-import 'components/text_form_field.dart';
+import 'components/button_form_component.dart';
+import 'components/text_form_field_component.dart';
 
 class RegisterScreen extends StatelessWidget {
   final RoundedLoadingButtonController _buttonController =

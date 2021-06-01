@@ -7,8 +7,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:string_validator/string_validator.dart' as validate;
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'components/button_form.dart';
-import 'components/text_form_field.dart';
+import 'components/button_form_component.dart';
+import 'components/text_form_field_component.dart';
+import 'components/error_snackbar_component.dart';
 
 class LoginScreen extends StatelessWidget {
   final RoundedLoadingButtonController _buttonController =
@@ -16,6 +17,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<ScaffoldState> _scaffoldK = GlobalKey<ScaffoldState>();
+
     final FirebaseAuth _controllerFirebase = FirebaseAuth.instance;
     final MediaQueryData _device = MediaQuery.of(context);
     final double _fontSizeTitle = _device.orientation == Orientation.portrait
@@ -25,7 +28,7 @@ class LoginScreen extends StatelessWidget {
     String _password;
 
     return Scaffold(
-      // backgroundColor: Colors.black,
+      key: _scaffoldK,
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -81,13 +84,15 @@ class LoginScreen extends StatelessWidget {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         _controllerFirebase
-                            .createUserWithEmailAndPassword(
+                            .signInWithEmailAndPassword(
                                 email: _email, password: _password)
                             .then((value) => _controllerFirebase
                                 .currentUser()
                                 .then((value) => print(value.email)))
-                            .catchError((PlatformException onError) =>
-                                print(onError.message));
+                            .catchError((onError) => _scaffoldK.currentState
+                                .showSnackBar(
+                                    ComponentErrorSnackBar(onError.code)
+                                        .build()));
                         _buttonController.success();
                       }
                     },
