@@ -81,6 +81,7 @@ class LoginScreen extends StatelessWidget {
                 ComponentButtonForm(
                     child: "Se connecter",
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         _controllerFirebase
