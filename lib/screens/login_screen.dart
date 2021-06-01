@@ -79,6 +79,9 @@ class LoginScreen extends StatelessWidget {
                     }),
                 SizedBox(height: 20.0),
                 ComponentButtonForm(
+                    onReset: () {
+                      FocusScope.of(context).unfocus();
+                    },
                     child: "Se connecter",
                     onPressed: () {
                       FocusScope.of(context).unfocus();
@@ -87,15 +90,17 @@ class LoginScreen extends StatelessWidget {
                         _controllerFirebase
                             .signInWithEmailAndPassword(
                                 email: _email, password: _password)
-                            .then((value) => _controllerFirebase
-                                .currentUser()
-                                .then((value) => print(value.email)))
-                            .catchError((onError) => _scaffoldK.currentState
-                                .showSnackBar(
-                                    ComponentErrorSnackBar(onError.code)
-                                        .build()));
-                        _buttonController.success();
+                            .then((value) =>
+                                _controllerFirebase.currentUser().then((value) {
+                                  return _buttonController.success();
+                                }))
+                            .catchError((onError) {
+                          _buttonController.error();
+                          _scaffoldK.currentState.showSnackBar(
+                              ComponentErrorSnackBar(onError.code).build());
+                        });
                       }
+                      _buttonController.error();
                     },
                     controller: _buttonController),
               ],
