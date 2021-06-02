@@ -12,7 +12,7 @@ class BuyITApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "BuyITApp",
-      initialRoute: RoutesConstants.login,
+      initialRoute: RoutesConstants.shop,
       routes: {
         RoutesConstants.login: (c) => LoginScreen(),
         RoutesConstants.register: (c) => RegisterScreen(),
