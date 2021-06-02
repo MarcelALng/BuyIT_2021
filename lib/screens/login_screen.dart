@@ -1,10 +1,11 @@
+import 'package:buyit_2021/constants/global_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:string_validator/string_validator.dart' as validate;
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'components/button_form_component.dart';
@@ -20,10 +21,7 @@ class LoginScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> _scaffoldK = GlobalKey<ScaffoldState>();
 
     final FirebaseAuth _controllerFirebase = FirebaseAuth.instance;
-    final MediaQueryData _device = MediaQuery.of(context);
-    final double _fontSizeTitle = _device.orientation == Orientation.portrait
-        ? _device.size.height * 0.10
-        : _device.size.height * 0.05;
+
     String _email;
     String _password;
 
@@ -37,43 +35,29 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "BuyIT",
-                  style: GoogleFonts.satisfy(
-                    color: Colors.white,
-                    fontSize: _fontSizeTitle,
-                  ),
-                ),
+                Text("BuyIT",
+                    style: GlobalConstant.getFonts1(
+                        color: Colors.white,
+                        fontSize: GlobalConstant.getFontSizeTitle(context))),
                 SizedBox(height: 15.0),
                 Flexible(
                   child: Text(
                     "Tout le High-Tech au meilleur prix",
-                    style: GoogleFonts.comfortaa(),
+                    style:
+                        GlobalConstant.getFonts2(color: null, fontSize: null),
                   ),
                 ),
                 SizedBox(height: 5.0),
                 ComponentTextFormField(
                   hintText: "Bienvenue: Adresse Email",
-                  validator: (value) {
-                    if (!validate.isEmail(value))
-                      return "Erreur adresse email incorrect";
-                    return null;
-                  },
+                  validator: GlobalConstant.validEmail,
                   onSaved: (value) => _email = value,
                 ),
                 SizedBox(height: 10.0),
                 ComponentTextFormField(
                     secret: true,
                     hintText: "Mot de passe",
-                    validator: (value) {
-                      if (validate.isAlphanumeric(value)) {
-                        if (value.length < 6) {
-                          return "Erreur, le mot de passe doit contenir 6 caractères au minimum";
-                        }
-                        return "Erreur le mot de passe doit contenir un symbole, des lettres et des chiffres";
-                      }
-                      return null;
-                    },
+                    validator: GlobalConstant.validPassword,
                     onSaved: (value) {
                       _password = value;
                     }),

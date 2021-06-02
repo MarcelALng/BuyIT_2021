@@ -1,3 +1,4 @@
+import 'package:buyit_2021/constants/global_constant.dart';
 import 'package:flutter/material.dart';
 
 import "constants/routes_constants.dart";
@@ -22,7 +23,7 @@ class BuyITApp extends StatelessWidget {
         RoutesConstants.search: (c) => SearchScreen(),
         RoutesConstants.shop: (c) => ShopScreen(),
       },
-      theme: ThemeData.dark(),
+      theme: GlobalConstant.getDarkTheme(),
     );
   }
 }

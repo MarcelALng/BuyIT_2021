@@ -5,6 +5,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:string_validator/string_validator.dart' as validate;
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:buyit_2021/constants/global_constant.dart';
+
 import 'components/button_form_component.dart';
 import 'components/text_form_field_component.dart';
 
@@ -16,10 +18,10 @@ class RegisterScreen extends StatelessWidget {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final FirebaseAuth _controllerFirebase = FirebaseAuth.instance;
 
-    final MediaQueryData _device = MediaQuery.of(context);
-    final double _fontSizeTitle = _device.orientation == Orientation.portrait
-        ? _device.size.height * 0.10
-        : _device.size.height * 0.05;
+    // final MediaQueryData _device = MediaQuery.of(context);
+    // // final double _fontSizeTitle = _device.orientation == Orientation.portrait
+    // //     ? _device.size.height * 0.10
+    // //     : _device.size.height * 0.05;
     String _email;
     String _password;
     return Scaffold(
@@ -32,16 +34,14 @@ class RegisterScreen extends StatelessWidget {
               children: [
                 Text(
                   "BuyIT",
-                  style: GoogleFonts.satisfy(
-                    color: Colors.white,
-                    fontSize: _fontSizeTitle,
-                  ),
+                  style: GlobalConstant.getFonts1(
+                      fontSize: GlobalConstant.getFontSizeTitle(context)),
                 ),
                 SizedBox(height: 15.0),
                 Flexible(
                   child: Text(
                     "Tout le High-Tech au meilleur prix",
-                    style: GoogleFonts.comfortaa(),
+                    style: GlobalConstant.getFonts2(),
                   ),
                 ),
                 SizedBox(height: 5.0),

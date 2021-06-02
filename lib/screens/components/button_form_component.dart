@@ -24,7 +24,7 @@ class ComponentButtonForm extends StatelessWidget {
             controller: controller,
             onPressed: onPressed,
             child: Text(child),
-            color: Colors.orange[600],
+            // color: Theme.of(context).buttonColor,
           ),
           Flexible(
             child: FlatButton(
