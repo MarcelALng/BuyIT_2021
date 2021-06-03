@@ -10,6 +10,8 @@ class ShopScreen extends StatelessWidget {
       body: FutureBuilder(
           future: _c.getPromo(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+            if (!snap.hasData && snap.connectionState != ConnectionState.done)
+              return CircularProgressIndicator();
             return ListView.builder(
               itemBuilder: (context, item) {
                 return Text(snap.data.documents[item]["name"]);
