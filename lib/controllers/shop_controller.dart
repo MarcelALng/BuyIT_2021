@@ -7,7 +7,7 @@ class ShopController {
   QuerySnapshot _docs;
   DocumentSnapshot _lastDoc;
 
-  StreamController<QuerySnapshot> _streamController =
+  final StreamController<QuerySnapshot> _streamController =
       StreamController<QuerySnapshot>();
 
   get getProductStream => _streamController.stream;
