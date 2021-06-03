@@ -9,17 +9,22 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   final _c = ShopController();
-
+  List<DocumentSnapshot> _productList = [];
   ScrollController _scrollController;
 
-  void _scrollerFunction() {
-    if(){
+  void _scrollFunction() {
+    _scrollController.position.maxScrollExtent.toString();
+
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent * 0.90 &&
+        !_scrollController.position.outOfRange) {
       _c.getPromo();
     }
   }
+
   @override
   void initState() {
-    _scrollController = ScrollController()..addListener(_scrollerFunction);
+    _scrollController = ScrollController()..addListener(_scrollFunction);
     super.initState();
   }
 
@@ -33,11 +38,19 @@ class _ShopScreenState extends State<ShopScreen> {
             if (!snap
                 .hasData /*&& snap.connectionState != ConnectionState.done*/)
               return CircularProgressIndicator();
+
+            if (snap.data.documents == null)
+              return Text("Il Nn'y a pas de produits");
+            _productList.addAll(snap.data.documents);
             return ListView.builder(
+              controller: _scrollController,
               itemBuilder: (context, item) {
-                return Text(snap.data.documents[item]["name"]);
+                return Text(
+                  _productList[item]["name"],
+                  style: TextStyle(fontSize: 200.0),
+                );
               },
-              itemCount: snap.data.documents.length,
+              itemCount: _productList.length,
             );
           }),
     );

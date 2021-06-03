@@ -16,7 +16,7 @@ class ShopController {
   static const int _maxProductLoading = 2;
   static const _collectionFS = "products";
   static const _promoFieldFS = "special-offer";
-
+  static const String _orderFieldFS = "name";
   void getPromo() async {
     if (noMoreProd) return null;
     if (_lastDoc == null) {
@@ -29,6 +29,8 @@ class ShopController {
       _docs = await _db
           .collection(_collectionFS)
           .where(_promoFieldFS, isEqualTo: true)
+          .orderBy(
+              _orderFieldFS) //need to create index in firebaseDB, quite long time
           .startAfterDocument(_lastDoc)
           .limit(_maxProductLoading)
           .getDocuments();
@@ -36,6 +38,7 @@ class ShopController {
     if (_docs.documents.isNotEmpty) {
       _streamController.add(_docs);
       _lastDoc = _docs.documents.last;
-    }
+    } else
+      noMoreProd = true;
   }
 }
