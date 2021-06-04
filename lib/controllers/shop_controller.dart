@@ -13,7 +13,7 @@ class ShopController {
   get getProductStream => _streamController.stream;
 
   bool noMoreProd = false;
-  static const int _maxProductLoading = 2;
+  static const int _maxProductLoading = 3;
   static const _collectionFS = "products";
   static const _promoFieldFS = "special-offer";
   static const String _orderFieldFS = "name";

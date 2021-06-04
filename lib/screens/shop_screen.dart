@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:buyit_2021/controllers/shop_controller.dart';
+import 'components/product_card.dart';
 
 class ShopScreen extends StatefulWidget {
   @override
@@ -45,10 +46,7 @@ class _ShopScreenState extends State<ShopScreen> {
             return ListView.builder(
               controller: _scrollController,
               itemBuilder: (context, item) {
-                return Text(
-                  _productList[item]["name"],
-                  style: TextStyle(fontSize: 200.0),
-                );
+                return ProductCardComponent(productData: _productList[item]);
               },
               itemCount: _productList.length,
             );
