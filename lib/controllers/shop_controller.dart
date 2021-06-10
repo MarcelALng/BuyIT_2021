@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:buyit_2021/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShopController {
