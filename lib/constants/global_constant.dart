@@ -44,6 +44,8 @@ class GlobalConstant {
 
   static ThemeData getDarkTheme() {
     return ThemeData.dark().copyWith(
+        bannerTheme:
+            MaterialBannerThemeData(backgroundColor: Colors.deepOrange),
         buttonColor: Colors.orange[600],
         snackBarTheme: SnackBarThemeData(
             contentTextStyle: getFonts2(color: Colors.white, fontSize: null)));

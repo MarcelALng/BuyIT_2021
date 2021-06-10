@@ -10,7 +10,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   final _c = ShopController();
-  List<DocumentSnapshot> _productList = [];
+  List<DocumentSnapshot> _productList;
   ScrollController _scrollController;
 
   void _scrollFunction() {
@@ -25,13 +25,14 @@ class _ShopScreenState extends State<ShopScreen> {
 
   @override
   void initState() {
+    _productList = [];
     _scrollController = ScrollController()..addListener(_scrollFunction);
+    _c.getPromo();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _c.getPromo();
     return Scaffold(
       body: StreamBuilder(
           stream: _c.getProductStream,

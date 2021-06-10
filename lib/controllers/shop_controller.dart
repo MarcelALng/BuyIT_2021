@@ -23,6 +23,7 @@ class ShopController {
       _docs = await _db
           .collection(_collectionFS)
           .where(_promoFieldFS, isEqualTo: true)
+          .orderBy(_orderFieldFS)
           .limit(_maxProductLoading)
           .getDocuments();
     } else {
