@@ -18,7 +18,29 @@ class ShopController {
   static const _collectionFS = "products";
   static const _promoFieldFS = "special-offer";
   static const String _orderFieldFS = "name";
+
+  void modelizeProductsList() async {
+    QuerySnapshot _test;
+    List<ProductModel> productsList = [];
+
+    _test = await _db
+        .collection(_collectionFS)
+        .where(_promoFieldFS, isEqualTo: true)
+        .orderBy(_orderFieldFS)
+        .limit(_maxProductLoading)
+        .getDocuments();
+    _test.documents.map((productData) {
+      Map<String, dynamic> _prodMap = {
+        'id': int.parse(productData.documentID),
+        ...productData.data
+      };
+      return productsList.add(ProductModel.fromJson(_prodMap));
+    }).toList();
+    productsList.forEach((prod) => print(prod.name));
+  }
+
   void getPromo() async {
+    modelizeProductsList();
     if (noMoreProd) return null;
     if (_lastDoc == null) {
       _docs = await _db
