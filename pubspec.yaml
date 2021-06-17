@@ -17,6 +17,7 @@ dependencies:
   rounded_loading_button: ^1.0.0
   google_fonts: ^1.0.0
   string_validator: ^0.1.4
+  json_annotation: ^3.0.1  
   
   cupertino_icons: ^1.0.0
 
@@ -24,8 +25,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
-  json_annotation:  
-  json_serializable:
+  json_serializable: ^3.3.0
 # json_serializable: ^3.3.0
   
 
