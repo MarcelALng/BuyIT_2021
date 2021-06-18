@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:buyit_2021/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 class ShopController {
   final Firestore _db = Firestore.instance;
@@ -34,7 +35,11 @@ class ShopController {
         'id': int.parse(productData.documentID),
         ...productData.data
       };
-      return productsList.add(ProductModel.fromJson(_prodMap));
+      try {
+        productsList.add(ProductModel.fromJson(_prodMap));
+      } on CheckedFromJsonException catch (error) {
+        print(error.message);
+      }
     }).toList();
     productsList.forEach((prod) => print(prod.name));
   }
