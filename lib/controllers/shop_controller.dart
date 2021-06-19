@@ -6,11 +6,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 class ShopController {
   final Firestore _db = Firestore.instance;
-  QuerySnapshot _docs;
+  List<ProductModel> _docs = [];
   DocumentSnapshot _lastDoc;
 
-  final StreamController<QuerySnapshot> _streamController =
-      StreamController<QuerySnapshot>();
+  final StreamController<List<ProductModel>> _streamController =
+      StreamController<List<ProductModel>>();
 
   get getProductStream => _streamController.stream;
 
@@ -20,42 +20,43 @@ class ShopController {
   static const _promoFieldFS = "special-offer";
   static const String _orderFieldFS = "name";
 
-  void modelizeProductsList() async {
-    QuerySnapshot _test;
-    List<ProductModel> productsList = [];
+  void modelizeProductsList(List<DocumentSnapshot> docsSnaps) async {
+    if (docsSnaps.isEmpty) {
+      noMoreProd = true;
+      return null;
+    }
+    // modelizeProductsList(_query.documents);
 
-    _test = await _db
-        .collection(_collectionFS)
-        .where(_promoFieldFS, isEqualTo: true)
-        .orderBy(_orderFieldFS)
-        .limit(_maxProductLoading)
-        .getDocuments();
-    _test.documents.map((productData) {
+    docsSnaps.map((productData) {
       Map<String, dynamic> _prodMap = {
         'id': int.parse(productData.documentID),
         ...productData.data
       };
       try {
-        productsList.add(ProductModel.fromJson(_prodMap));
+        _docs.add(ProductModel.fromJson(_prodMap));
       } on CheckedFromJsonException catch (error) {
         print(error.message);
+        return null;
       }
     }).toList();
-    productsList.forEach((prod) => print(prod.name));
+    _streamController.add(_docs);
+    _lastDoc = docsSnaps.last;
+    // productsList.forEach((prod) => print(prod.name));
   }
 
   void getPromo() async {
-    modelizeProductsList();
+    QuerySnapshot _query;
+    // modelizeProductsList();
     if (noMoreProd) return null;
     if (_lastDoc == null) {
-      _docs = await _db
+      _query = await _db
           .collection(_collectionFS)
           .where(_promoFieldFS, isEqualTo: true)
           .orderBy(_orderFieldFS)
           .limit(_maxProductLoading)
           .getDocuments();
     } else {
-      _docs = await _db
+      _query = await _db
           .collection(_collectionFS)
           .where(_promoFieldFS, isEqualTo: true)
           .orderBy(
@@ -64,10 +65,6 @@ class ShopController {
           .limit(_maxProductLoading)
           .getDocuments();
     }
-    if (_docs.documents.isNotEmpty) {
-      _streamController.add(_docs);
-      _lastDoc = _docs.documents.last;
-    } else
-      noMoreProd = true;
+    modelizeProductsList(_query.documents);
   }
 }

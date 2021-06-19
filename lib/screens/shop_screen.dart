@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:buyit_2021/controllers/shop_controller.dart';
 import 'components/product_card_component.dart';
+import 'package:buyit_2021/models/product_model.dart';
 
 class ShopScreen extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   final _c = ShopController();
-  List<DocumentSnapshot> _productList;
+  List<ProductModel> _productList;
   ScrollController _scrollController;
 
   void _scrollFunction() {
@@ -36,14 +37,15 @@ class _ShopScreenState extends State<ShopScreen> {
     return Scaffold(
       body: StreamBuilder(
           stream: _c.getProductStream,
-          builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+          builder: (context, AsyncSnapshot<List<ProductModel>> snap) {
             if (!snap
                 .hasData /*&& snap.connectionState != ConnectionState.done*/)
               return CircularProgressIndicator();
 
-            if (snap.data.documents == null)
-              return Text("Il Nn'y a pas de produits");
-            _productList.addAll(snap.data.documents);
+            if (snap.data == null) return Text("Il n'y a pas de produit");
+
+            _productList.addAll(snap.data);
+
             return ListView.builder(
               controller: _scrollController,
               itemBuilder: (context, item) {

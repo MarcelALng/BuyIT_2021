@@ -1,17 +1,17 @@
 import 'package:buyit_2021/constants/global_constant.dart';
+import 'package:buyit_2021/models/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductCardComponent extends StatelessWidget {
-  final DocumentSnapshot productData;
+  final ProductModel productData;
 
   ProductCardComponent({@required this.productData});
   @override
   Widget build(BuildContext context) {
-    String _priceText = productData['price'].toString() + '€';
-    String _sumText = productData['sum'].length > 60
-        ? productData['sum'].substring(0, 60)
-        : productData['sum'];
+    String _priceText = productData.price.toString() + '€';
+    String _sumText = productData.sum.length > 60
+        ? productData.sum.substring(0, 60)
+        : productData.sum;
     return Container(
       height: 280,
       child: Card(
@@ -28,7 +28,7 @@ class ProductCardComponent extends StatelessWidget {
                   Flexible(
                     child: FadeInImage(
                       placeholder: AssetImage("assets/preloader.gif"),
-                      image: NetworkImage(productData['img_icon']),
+                      image: NetworkImage(productData.imgIcon),
                     ),
                   ),
                   Flexible(
@@ -42,7 +42,7 @@ class ProductCardComponent extends StatelessWidget {
                             children: [
                               Center(
                                 child: Text(
-                                  productData["name"],
+                                  productData.name,
                                   style:
                                       GlobalConstant.getFonts2(fontSize: 20.0),
                                 ),
