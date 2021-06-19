@@ -36,6 +36,7 @@ class ShopController {
         _docs.add(ProductModel.fromJson(_prodMap));
       } on CheckedFromJsonException catch (error) {
         print(error.message);
+        print(error.map);
         return null;
       }
     }).toList();
